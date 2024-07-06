@@ -6,11 +6,19 @@ import org.json.JSONObject;
 import com.razorpay.Payment;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RazorpayPaymentGateway implements PaymentGateway {
+
+    private RazorpayClient razorpayClient;
+
+    public RazorpayPaymentGateway(RazorpayClient razorpayClient) {
+        this.razorpayClient = razorpayClient;
+    }
+
     @Override
     public String getPaymentLink(String orderId, Long amount) throws RazorpayException {
-        RazorpayClient razorpay = new RazorpayClient("[YOUR_KEY_ID]", "[YOUR_KEY_SECRET]");
         JSONObject paymentLinkRequest = new JSONObject();
         paymentLinkRequest.put("amount",1000);
         paymentLinkRequest.put("currency","INR");
@@ -35,7 +43,7 @@ public class RazorpayPaymentGateway implements PaymentGateway {
         paymentLinkRequest.put("callback_url","https://example-callback-url.com/");
         paymentLinkRequest.put("callback_method","get");
 
-        PaymentLink payment = razorpay.paymentLink.create(paymentLinkRequest);
+        PaymentLink payment = razorpayClient.paymentLink.create(paymentLinkRequest);
         return null;
     }
 }
