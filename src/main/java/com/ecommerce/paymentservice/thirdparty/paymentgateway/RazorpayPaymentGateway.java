@@ -18,7 +18,7 @@ public class RazorpayPaymentGateway implements PaymentGateway {
     }
 
     @Override
-    public String getPaymentLink(String orderId, Long amount) throws RazorpayException {
+    public String getPaymentLink(String orderId, Long amount, String phoneNumber, String email) throws RazorpayException {
         JSONObject paymentLinkRequest = new JSONObject();
         paymentLinkRequest.put("amount",1000);
         paymentLinkRequest.put("currency","INR");
